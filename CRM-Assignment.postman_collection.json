@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "01c0c169-952f-4dd6-af03-24756858e7f1",
+		"name": "CRM Backend Assignment",
+		"description": "Postman collection for the Lead Management CRM Backend.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "0"
+	},
+	"item": [
+		{
+			"name": "1. Public",
+			"item": [
+				{
+					"name": "Submit Enquiry (Visitor)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"9876543210\",\n    \"courseInterest\": \"Data Science\",\n    \"message\": \"I am very interested in your program.\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/enquiries",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"enquiries"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Authentication",
+			"item": [
+				{
+					"name": "Register Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Postman Counselor\",\n    \"email\": \"postman@counselor.com\",\n    \"password\": \"Password@123!\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"postman@counselor.com\",\n    \"password\": \"Password@123!\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Logs the user in and automatically saves a session cookie for subsequent requests."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout Employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/auth/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Destroys the active session cookie."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Lead Management (Protected)",
+			"item": [
+				{
+					"name": "Get Unclaimed Public Leads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/enquiries/public",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"enquiries",
+								"public"
+							]
+						},
+						"description": "Requires an active session (cookie). Returns all leads that have not been claimed."
+					},
+					"response": []
+				},
+				{
+					"name": "Claim a Lead",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/enquiries/:id/claim",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"enquiries",
+								":id",
+								"claim"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ENTER_LEAD_ID_HERE"
+								}
+							]
+						},
+						"description": "Requires an active session (cookie). Assigns the lead to the currently logged in employee."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Leads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/enquiries/my-leads",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"enquiries",
+								"my-leads"
+							]
+						},
+						"description": "Requires an active session (cookie). Returns all leads claimed by the logged in employee."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		}
+	]
+}
